@@ -1,0 +1,36 @@
+.error-container {
+        max-width: 500px;
+        margin: 60px auto;
+        padding: 25px;
+        background: #fff3f3;
+        border: 1px solid #f5c2c7;
+        border-radius: 10px;
+        text-align: center;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.error-container h2 {
+        color: #a94442;
+        margin-bottom: 15px;
+}
+
+.error-container p {
+        font-size: 16px;
+        color: #721c24;
+}
+
+.error-container a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 18px;
+        background: #4a90e2;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: background 0.3s ease;
+}
+
+.error-container a:hover {
+        background: #357abd;
+}

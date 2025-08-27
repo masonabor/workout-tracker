@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='homeStyles.css') }}">
+<div class="main-container">
+    <h1>Ласкаво просимо до Workout Tracker!</h1>
+    <p>
+        Тут ти можеш легко відстежувати свої тренування, додавати нові вправи,
+        переглядати історію підходів та повторів. Все у зручному та зрозумілому інтерфейсі.
+    </p>
+    <p>
+        Почни з реєстрації або увійди в свій акаунт, щоб створити перше тренування.
+    </p>
+    <h2><a href="{{ url_for('account.register') }}">Реєстрація</a></h2>
+</div>
+
+{% endblock %}

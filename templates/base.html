@@ -11,7 +11,14 @@
     <header>
         <nav>
             <ul>
-
+                <li><a href="">Головна</a></li>
+                {% if 'user' in session %}
+                    <li><a href="">Мої тренування</a></li>
+                    <li><a href="">Профіль</a></li>
+                    <li><a href=>Вийти</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auth.login') }}">Ввійти</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>

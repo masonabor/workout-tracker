@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='createWorkout.css') }}">
+<div class="create-container">
+    <h1>Створити тренування</h1>
+
+    {% if error %}
+        <div class="error-message">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('workouts.create_workout') }}" class="workout-form">
+        <label for="name">Назва тренування:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="date">Дата:</label>
+        <input type="datetime-local" id="date" name="date" required>
+
+        <button type="submit">Створити</button>
+    </form>
+</div>
+{% endblock %}

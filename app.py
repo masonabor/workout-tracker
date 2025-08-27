@@ -1,8 +1,9 @@
-from flask import Flask
+from flask import Flask, render_template
 from config import Config
 from routes import auth_bp # через назваПапки.файл імпортуємо компонент з іншої папки
 from routes import account_bp
 from routes import workouts_bp
+from routes import home_bp
 from database import db
 
 def create_app() -> Flask:
@@ -17,6 +18,7 @@ def create_app() -> Flask:
     fapp.register_blueprint(auth_bp)
     fapp.register_blueprint(workouts_bp)
     fapp.register_blueprint(account_bp)
+    fapp.register_blueprint(home_bp)
 
     with fapp.app_context():
         db.create_all()

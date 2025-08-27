@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Мій кабінет{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='homepageStyles.css') }}">
+<div class="container mt-4">
+    <h2>Мої тренування</h2>
+
+    <div class="mb-3">
+        <a class="btn btn-primary" href="{{ url_for('workouts.create_workout') }}">
+            ➕ Додати тренування
+        </a>
+    </div>
+
+    {% if workouts %}
+        <ul class="list-group">
+            {% for workout in workouts %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <strong>{{ workout.name }}</strong> <br>
+                        <small>{{ workout.date.strftime("%d.%m.%Y %H:%M") }}</small>
+                    </span>
+                    <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('workouts.workouts_view', workout_id=workout.id) }}">
+                        Відкрити
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted">У вас ще немає тренувань.</p>
+    {% endif %}
+</div>
+{% endblock %}

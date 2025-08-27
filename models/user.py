@@ -26,22 +26,28 @@ class User(Base):
     """
     workouts = db.relationship('Workout', lazy='selectin', backref='user')
     role = db.Column(db.String(10), nullable=False)
-    date = db.Column(db.DateTime, default=datetime.now())
+    date_of_create = db.Column(db.DateTime, default=datetime.now())
 
-    def __init__(self, username: str, email: str, password:str) -> None:
+    def __init__(self,
+                 username: str,
+                 email: str,
+                 password:str,
+                 role: str = ROLE_USER) -> None:
+
         self.username = username
         self.email = email
         self.hashed_password = User.hash_password(password)
-        self.role = User.ROLE_USER
+        self.role = role
 
     @staticmethod
     def hash_password(password: str) -> str:
         # хешування пароля, модуль bcrypt
         # encode() вертає послідовність байтів, де b'' - байти, /x - шістнадцяткове число
-        return str(bcrypt.hashpw(password.encode(), bcrypt.gensalt()))
+        return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode('utf-8')
 
-    @staticmethod
-    def create_admin(username: str, email: str, password: str) -> 'User':
-        user = User(username, email, password)
-        user.role = User.ROLE_ADMIN
-        return user
+    def check_password(self, password: str) -> bool:
+        return bcrypt.checkpw(password.encode(), self.hashed_password.encode())
+
+    @classmethod
+    def create_admin(cls, username: str, email: str, password: str) -> 'User':
+        return cls(username, email, password, role=cls.ROLE_ADMIN)

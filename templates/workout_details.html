@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Тренування: {{ workout.name }}{% endblock %}
+
+{% block content %}
+<div class="workout-detail">
+    <h2>{{ workout.name }}</h2>
+    <p><strong>Дата:</strong> {{ workout.date.strftime('%d.%m.%Y') }}</p>
+
+    {% if workout.exercises %}
+        {% for exercise in workout.exercises %}
+            <div class="exercise-block">
+                <h3>Вправа: {{ exercise.name }}</h3>
+
+                {% if exercise.machines %}
+                    {% for machine in exercise.machines %}
+                        <div class="machine-block">
+                            <h4>Тренажер: {{ machine.name }}</h4>
+
+                            {% if machine.sets %}
+                                <ul class="sets-list">
+                                    {% for s in machine.sets %}
+                                        <li>
+                                            Підхід {{ loop.index }}: {{ s.count }} повторів, відпочинок {{ s.rest_time.strftime('%H:%M:%S') }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>Немає підходів</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Устаткування не вказано</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Немає вправ у цьому тренуванні</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/workout_detail.css') }}">
+{% endblock %}

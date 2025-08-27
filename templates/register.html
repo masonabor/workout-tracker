@@ -3,9 +3,16 @@
 {% block title %}Реєстрація{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='loginStyles.css') }}">
+
 <div class="form-container">
     <h2>Реєстрація користувача</h2>
-    <form method="POST" action="{{ url_for('auth.register') }}">
+
+    {% if error %}
+        <div class="error-message">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('account.register') }}">
         <label for="username">Логін</label>
         <input type="text" id="username" name="username" required>
 

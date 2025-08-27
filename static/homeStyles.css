@@ -1,0 +1,28 @@
+ .main-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #1e1e1e;
+        color: #f0f0f0;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        font-family: Arial, sans-serif;
+        text-align: center;
+ }
+
+ .main-container h1 {
+        color: #4a90e2;
+        margin-bottom: 20px;
+ }
+
+ .main-container p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+ }
+
+ .main-container a {
+     color: #4a90e2;
+     text-decoration: none;
+
+ }

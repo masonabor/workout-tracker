@@ -2,3 +2,4 @@
 from .auth import auth_bp
 from .account import account_bp
 from .workouts import workouts_bp
+from .home import home_bp

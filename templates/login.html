@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Вхід{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='loginStyles.css') }}">
+
+<div class="form-container">
+    <h2>Вхід</h2>
+
+    {% if error %}
+        <div class="error-message">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('auth.login') }}">
+        <label for="identifier">Логін або Email</label>
+        <input type="text" id="identifier" name="identifier" required>
+
+        <label for="password">Пароль</label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Увійти</button>
+    </form>
+</div>
+{% endblock %}

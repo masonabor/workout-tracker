@@ -28,7 +28,7 @@ def login():
             session['id'] = existing_user.id
         else:
             return render_template('login.html', error='Користувача з таким логіном не знайдено')
-        return redirect(url_for('account.homepage'))
+        return render_template('homepage.html', workouts=existing_user.workouts)
     return render_template('login.html', session=session)
 
 
@@ -36,6 +36,7 @@ def login():
 def logout():
     if session.get('user'):
         session.pop('user')
-        return redirect(url_for('home'))
+        session.pop('id')
+        return redirect(url_for('home.home'))
     else:
         return redirect(url_for('auth.login'))

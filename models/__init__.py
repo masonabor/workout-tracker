@@ -1,5 +1,5 @@
 from .user import User
 from .workout import Workout
 from .exercise import Exercise
-from .machine import Machine
+from .equipment import Equipment
 from .set import Set

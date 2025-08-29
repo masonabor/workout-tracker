@@ -1,0 +1,86 @@
+/* Контейнер */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 25px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Заголовок */
+.container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Повідомлення про помилку */
+.container .error {
+    background: #ffe0e0;
+    border: 1px solid #ff5c5c;
+    color: #b30000;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* Форма */
+.exercise-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Групи інпутів */
+.exercise-form div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Лейбли */
+.exercise-form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Інпут та textarea */
+.exercise-form input,
+.exercise-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.2s;
+}
+
+.exercise-form input:focus,
+.exercise-form textarea:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+
+/* Текстова область */
+.exercise-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Кнопка */
+.exercise-form button {
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.25s;
+}
+
+.exercise-form button:hover {
+    background: #357abd;
+}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='addExerciseStyles.css') }}">
+<div class="container">
+    <h2>Додати вправу</h2>
+
+    {% if error %}
+        <div style="color:red;">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('workouts.add_exercise', workout_id=workout_id) }}" class="exercise-form">
+        <div>
+            <label for="name">Назва вправи:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div>
+            <label for="equipment">Тренажери / обладнання:</label>
+            <input type="text" id="equipment" name="equipment">
+        </div>
+
+        <div>
+            <button type="submit">Додати</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

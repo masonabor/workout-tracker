@@ -7,7 +7,7 @@ class Exercise(Base):
 
     name = db.Column(db.String(60), nullable=False)
     workout_id = db.Column(db.Integer, db.ForeignKey('workouts.id'), nullable=False)
-    machines = db.relationship('Machine', back_populates='exercise', lazy='selectin')
+    equipments = db.relationship('Equipment', back_populates='exercise', lazy='selectin')
 
     def __init__(self,
                  name: str,

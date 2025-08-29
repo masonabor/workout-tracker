@@ -12,11 +12,11 @@ def test() -> str:
 @account_bp.route('/homepage')
 def homepage():
     try:
-        user = User.query.filter_by(username=session['user'])
+        user = User.query.filter_by(username=session['user']).first()
         return render_template('homepage.html', workouts=user.workouts)
     except Exception as e:
         print(e)
-        return render_template('homepage.html')
+        return render_template('error.html', error=e)
 
 
 @account_bp.route('/register', methods=['POST', 'GET'])

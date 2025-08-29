@@ -2,13 +2,13 @@ from .base import Base
 from database import db
 from .exercise import Exercise
 
-class Machine(Base):
-    __tablename__ = 'machines'
+class Equipment(Base):
+    __tablename__ = 'equipments'
 
     name = db.Column(db.String(60), nullable=False)
     exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), nullable=False)
-    exercise = db.relationship('Exercise', back_populates='machines', lazy='selectin')
-    sets = db.relationship('Set', back_populates='machine', lazy='selectin')
+    exercise = db.relationship('Exercise', back_populates='equipments', lazy='selectin')
+    sets = db.relationship('Set', back_populates='equipment', lazy='selectin')
 
     def __init__(self,
                  name: str,

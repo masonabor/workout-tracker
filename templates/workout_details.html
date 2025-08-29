@@ -6,20 +6,29 @@
 <div class="workout-detail">
     <h2>{{ workout.name }}</h2>
     <p><strong>Дата:</strong> {{ workout.date.strftime('%d.%m.%Y') }}</p>
+    <div class="mb-3">
+        <a class="btn btn-primary" href="{{ url_for('workouts.add_exercise', workout_id=workout.id) }}">
+            ➕ Додати вправу
+        </a>
+    </div>
 
     {% if workout.exercises %}
         {% for exercise in workout.exercises %}
             <div class="exercise-block">
                 <h3>Вправа: {{ exercise.name }}</h3>
-
-                {% if exercise.machines %}
-                    {% for machine in exercise.machines %}
+                <form method="POST" action="{{ url_for('workouts.add_equipment', exercise_id=exercise.id) }}">
+                    <label for="name">Назва устаткування</label>
+                    <input type="text" id="name" name="name" required>
+                    <button type="submit">Додати</button>
+                </form>
+                {% if exercise.equipments %}
+                    {% for equipment in exercise.equipments %}
                         <div class="machine-block">
-                            <h4>Тренажер: {{ machine.name }}</h4>
+                            <h4>Тренажер: {{ equipment.name }}</h4>
 
-                            {% if machine.sets %}
+                            {% if equipment.sets %}
                                 <ul class="sets-list">
-                                    {% for s in machine.sets %}
+                                    {% for s in equipments.sets %}
                                         <li>
                                             Підхід {{ loop.index }}: {{ s.count }} повторів, відпочинок {{ s.rest_time.strftime('%H:%M:%S') }}
                                         </li>

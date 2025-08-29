@@ -28,7 +28,7 @@ def login():
             session['id'] = existing_user.id
         else:
             return render_template('login.html', error='Користувача з таким логіном не знайдено')
-        return render_template('homepage.html', workouts=existing_user.workouts)
+        return redirect(url_for('account.homepage'))
     return render_template('login.html', session=session)
 
 

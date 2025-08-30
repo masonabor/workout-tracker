@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, session, url_for, redirect, Response
-from models import User, Workout, Exercise, Equipment
+from models import User, Workout, Exercise, Set
 from database import db
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from models.equipment import Equipment
 
@@ -98,3 +98,25 @@ def add_equipment(exercise_id: int) -> str:
         print(e)
         return render_template('error.html', error=e)
 
+
+@workouts_bp.route('/addSets/<equipment_id>', methods=['POST'])
+def add_sets(equipment_id: int) -> str:
+    equipment = Equipment.query.get(equipment_id)
+    user = equipment.exercise.workout.user
+    if user.id != session['id']:
+        return render_template('error.html', error='Ви не є власником тренування')
+
+    count = int(request.form['count'])
+    print(request.form['rest_time'])
+
+    rest_time = datetime.strptime(request.form['rest_time'], '%H:%M:%S')
+    if not count:
+        return render_template('error.html', error='')
+
+    try:
+        db.session.add(Set(count, rest_time, equipment))
+        db.session.commit()
+        return render_template('workout_details.html', workout=equipment.exercise.workout)
+    except Exception as e:
+        print(e)
+        return render_template('error.html', error=e)

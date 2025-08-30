@@ -25,10 +25,16 @@
                     {% for equipment in exercise.equipments %}
                         <div class="machine-block">
                             <h4>Тренажер: {{ equipment.name }}</h4>
-
+                            <form method="POST" action="{{ url_for('workouts.add_sets', equipment_id=equipment.id) }}">
+                                <label for="count">Підхід</label>
+                                    <input type="text" id="count" name="count" required>
+                                <label for="rest_time">Час відпочинку</label>
+                                    <input type="time" id="rest_time" name="rest_time" step="1" required>
+                                <button type="submit">Додати</button>
+                            </form>
                             {% if equipment.sets %}
                                 <ul class="sets-list">
-                                    {% for s in equipments.sets %}
+                                    {% for s in equipment.sets %}
                                         <li>
                                             Підхід {{ loop.index }}: {{ s.count }} повторів, відпочинок {{ s.rest_time.strftime('%H:%M:%S') }}
                                         </li>

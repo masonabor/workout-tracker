@@ -1,24 +1,26 @@
 .account-container {
-    max-width: 600px;
-    margin: 30px auto;
-    padding: 20px;
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 25px;
     background: #f8f9fa;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .account-container h2 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     color: #333;
 }
 
+/* Кнопка додавання */
 .add-button {
     display: inline-block;
     margin-bottom: 20px;
-    padding: 10px 15px;
+    padding: 10px 18px;
     background: #28a745;
     color: white;
+    font-weight: bold;
     text-decoration: none;
     border-radius: 6px;
     transition: background 0.3s;
@@ -28,25 +30,65 @@
     background: #218838;
 }
 
+/* Список тренувань */
 .workout-list {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
-.workout-list li {
-    margin: 10px 0;
-    padding: 10px;
+.workout-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    margin-bottom: 12px;
     background: #fff;
-    border-radius: 8px;
+    border-radius: 10px;
     border: 1px solid #ddd;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.workout-list a {
+.workout-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Інформація про тренування */
+.workout-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.workout-info strong {
+    font-size: 16px;
+    color: #222;
+}
+
+.workout-date {
+    font-size: 13px;
+    color: #777;
+    margin-top: 4px;
+}
+
+/* Посилання "Відкрити" */
+.view-link {
     text-decoration: none;
-    color: #007bff;
-    font-weight: bold;
+    padding: 6px 12px;
+    background: #007bff;
+    color: white;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background 0.3s;
 }
 
-.workout-list a:hover {
-    text-decoration: underline;
+.view-link:hover {
+    background: #0056b3;
+}
+
+/* Повідомлення, якщо немає тренувань */
+.no-workouts {
+    text-align: center;
+    color: #777;
+    font-style: italic;
 }

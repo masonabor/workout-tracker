@@ -7,28 +7,27 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <ul>
-                <li><a href="">Головна</a></li>
-                {% if 'user' in session %}
-                    <li><a href="">Мої тренування</a></li>
-                    <li><a href="">Профіль</a></li>
-                    <li><a href="{{ url_for('auth.logout') }}">Вийти</a></li>
-                {% else %}
-                    <li><a href="{{ url_for('auth.login') }}">Ввійти</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </header>
 
-    <!-- Main content -->
+<header>
+    <nav>
+        <div class="logo">🏋️ МійGYM</div>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home.home') }}">Головна</a></li>
+            {% if 'user' in session %}
+                <li><a href="{{ url_for('account.homepage') }}">Мої тренування</a></li>
+<!--                <li><a href="{{ url_for('account.homepage') }}">Профіль</a></li>-->
+                <li><a href="{{ url_for('auth.logout') }}">Вийти</a></li>
+            {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Увійти</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
     <main>
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; {{ current_year }} Мій тренувальний застосунок</p>
     </footer>

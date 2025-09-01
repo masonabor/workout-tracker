@@ -4,31 +4,30 @@
 
 {% block content %}
 <link rel="stylesheet" href="{{ url_for('static', filename='homepageStyles.css') }}">
-<div class="container mt-4">
+
+<div class="account-container">
     <h2>Мої тренування</h2>
 
-    <div class="mb-3">
-        <a class="btn btn-primary" href="{{ url_for('workouts.create_workout') }}">
-            ➕ Додати тренування
-        </a>
-    </div>
+    <a class="add-button" href="{{ url_for('workouts.create_workout') }}">
+        ➕ Додати тренування
+    </a>
 
     {% if workouts %}
-        <ul class="list-group">
+        <ul class="workout-list">
             {% for workout in workouts %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>
-                        <strong>{{ workout.name }}</strong> <br>
-                        <small>{{ workout.date.strftime("%d.%m.%Y %H:%M") }}</small>
-                    </span>
-                    <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('workouts.workouts_view', workout_id=workout.id) }}">
-                        Відкрити
+                <li class="workout-item">
+                    <div class="workout-info">
+                        <strong>{{ workout.name }}</strong>
+                        <span class="workout-date">{{ workout.date.strftime("%d.%m.%Y %H:%M") }}</span>
+                    </div>
+                    <a class="view-link" href="{{ url_for('workouts.workouts_view', workout_id=workout.id) }}">
+                        🔗 Відкрити
                     </a>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p class="text-muted">У вас ще немає тренувань.</p>
+        <p class="no-workouts">У вас ще немає тренувань.</p>
     {% endif %}
 </div>
 {% endblock %}

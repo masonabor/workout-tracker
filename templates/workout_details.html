@@ -3,6 +3,7 @@
 {% block title %}Тренування: {{ workout.name }}{% endblock %}
 
 {% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='workoutDetailsStyles.css') }}">
 <div class="workout-detail">
     <h2>{{ workout.name }}</h2>
     <p><strong>Дата:</strong> {{ workout.date.strftime('%d.%m.%Y') }}</p>
@@ -29,7 +30,7 @@
                                 <label for="count">Підхід</label>
                                     <input type="text" id="count" name="count" required>
                                 <label for="rest_time">Час відпочинку</label>
-                                    <input type="time" id="rest_time" name="rest_time" step="1" required>
+                                    <input type="time" id="rest_time" name="rest_time" step="1">
                                 <button type="submit">Додати</button>
                             </form>
                             {% if equipment.sets %}
@@ -54,8 +55,4 @@
         <p>Немає вправ у цьому тренуванні</p>
     {% endif %}
 </div>
-{% endblock %}
-
-{% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/workoutDetailsStyles.css') }}">
 {% endblock %}

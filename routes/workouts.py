@@ -2,12 +2,15 @@ from flask import Blueprint, request, render_template, session, url_for, redirec
 from models import User, Workout, Exercise, Set
 from database import db
 from datetime import datetime
+from decorators import login_required
 
 from models.equipment import Equipment
 
 workouts_bp = Blueprint('workouts', __name__, url_prefix='/workouts')
 
+
 @workouts_bp.route('/view/<workout_id>')
+@login_required
 def workouts_view(workout_id: int):
     try:
         workout = Workout.query.get(workout_id)
@@ -22,6 +25,7 @@ def workouts_view(workout_id: int):
 
 
 @workouts_bp.route('/createWorkout', methods=['GET', 'POST'])
+@login_required
 def create_workout():
     if request.method == 'GET':
         return render_template('create_workout.html')
@@ -48,6 +52,7 @@ def create_workout():
 
 
 @workouts_bp.route('/addExercise/<workout_id>', methods=['POST', 'GET'])
+@login_required
 def add_exercise(workout_id: int) -> str | Response:
     if request.method == 'GET':
         return render_template('add_exercise.html', workout_id=workout_id)
@@ -80,6 +85,7 @@ def add_exercise(workout_id: int) -> str | Response:
 
 
 @workouts_bp.route('/addEquipment/<exercise_id>', methods=['POST'])
+@login_required
 def add_equipment(exercise_id: int) -> str:
     user = Exercise.query.filter_by(id=exercise_id).first().workout.user
     if user.id != session['id']:
@@ -100,6 +106,7 @@ def add_equipment(exercise_id: int) -> str:
 
 
 @workouts_bp.route('/addSets/<equipment_id>', methods=['POST'])
+@login_required
 def add_sets(equipment_id: int) -> str:
     equipment = Equipment.query.get(equipment_id)
     user = equipment.exercise.workout.user

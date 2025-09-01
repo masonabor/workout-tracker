@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for
 from models import User
-from .decorators import login_required
-from database import db
+from decorators import login_required
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth') # blueprint як підпрограма, яка потім в основному файлі підключається до основного застосунку
 

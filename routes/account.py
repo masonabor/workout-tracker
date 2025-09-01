@@ -1,15 +1,13 @@
-from flask import Blueprint, request, render_template, url_for, session
-from models import User, Workout
+from flask import Blueprint, request, render_template, session
+from models import User
 from database import db
+from decorators import login_required
 
 account_bp = Blueprint('account', __name__, url_prefix='/account')
 
-@account_bp.route('/test')
-def test() -> str:
-    return render_template('base.html')
-
 
 @account_bp.route('/homepage')
+@login_required
 def homepage():
     try:
         user = User.query.filter_by(username=session['user']).first()

@@ -1,7 +1,7 @@
 from flask import Blueprint, request, render_template, session, url_for, redirect, Response
 from models import User, Workout, Exercise, Set
 from database import db
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from models.equipment import Equipment
 

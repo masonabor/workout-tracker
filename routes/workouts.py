@@ -11,7 +11,7 @@ workouts_bp = Blueprint('workouts', __name__, url_prefix='/workouts')
 
 @workouts_bp.route('/view/<workout_id>')
 @login_required
-def workouts_view(workout_id: int):
+def workouts_view(workout_id: int) -> str:
     try:
         workout = Workout.query.get(workout_id)
 
@@ -26,7 +26,7 @@ def workouts_view(workout_id: int):
 
 @workouts_bp.route('/createWorkout', methods=['GET', 'POST'])
 @login_required
-def create_workout():
+def create_workout() -> str:
     if request.method == 'GET':
         return render_template('create_workout.html')
 

@@ -9,7 +9,7 @@ account_bp = Blueprint('account', __name__, url_prefix='/account')
 
 @account_bp.route('/homepage')
 @login_required
-def homepage():
+def homepage() -> str:
     try:
         user = User.query.filter_by(username=session['user']).first()
         return render_template('homepage.html', workouts=user.workouts)

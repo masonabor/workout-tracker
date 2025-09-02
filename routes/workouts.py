@@ -61,7 +61,7 @@ def add_exercise(workout_id: int) -> str | Response:
     if not user:
         return render_template('error.html', error='Ви не ввійшли')
 
-    workout = user.workouts[int(workout_id)-1]
+    workout = Workout.query.get(workout_id)
 
     if not workout:
         return render_template('error.html', error='Тренування з таким id у даного користувача не знайдено')

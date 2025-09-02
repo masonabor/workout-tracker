@@ -130,3 +130,11 @@
     font-size: 14px;
     color: #333;
 }
+
+p {
+    color: black;
+}
+
+a {
+    text-decoration: none;
+}

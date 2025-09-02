@@ -8,7 +8,7 @@
     <h2>{{ workout.name }}</h2>
     <p><strong>Дата:</strong> {{ workout.date.strftime('%d.%m.%Y') }}</p>
     <div class="mb-3">
-        <a class="btn btn-primary" href="{{ url_for('workouts.add_exercise', workout_id=workout.id) }}">
+        <a class="btn" href="{{ url_for('workouts.add_exercise', workout_id=workout.id) }}">
             ➕ Додати вправу
         </a>
     </div>

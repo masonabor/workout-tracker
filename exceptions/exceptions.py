@@ -1,0 +1,2 @@
+class WeekPasswordException(Exception):
+    pass

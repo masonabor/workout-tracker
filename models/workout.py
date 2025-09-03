@@ -28,3 +28,4 @@ class Workout(Base):
             self.user_id = user_id
         else:
             raise ValueError('Workout має бути прив\'язаний до користувача')
+

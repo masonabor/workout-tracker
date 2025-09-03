@@ -127,3 +127,32 @@ def add_sets(equipment_id: int) -> str:
     except Exception as e:
         print(e)
         return render_template('error.html', error=e)
+
+
+@workouts_bp.route('/filter')
+@login_required
+def filter_workouts() -> str:
+    user_id = session['id']
+    name = request.args.get('name') # query параметри, передаються ось так: /filter?name=Push&date=2025-08-30, якщо такого параметру немає, то повертає None
+    date_str = request.args.get('date') # request.args зберігає query параметри, які ми передаємо через браузерну строку
+
+    query = Workout.query.filter_by(user_id=user_id)
+
+    if name:
+        query = query.filter(Workout.name.ilike(f"%{name}%"))
+
+    if date_str:
+        try:
+            date = datetime.strptime(date_str, '%Y-%m-%d')
+            query = query.filter(db.func.date(Workout.date) == date)
+        except ValueError as e:
+            print(e)
+            return render_template('error.html', error='Невірний формат дати. YYYY-MM-DD')
+
+    workouts = query.order_by(Workout.date.desc()).all()
+    return render_template('homepage.html', workouts=workouts)
+"""
+Тут треба зрозуміти, що можна отримати query і далі його за потреби фільтрувати, а не писати все в один рядок
+також потрібно використовувати query параметри, так як це зручно, наприклад для фільтрування
+"""
+

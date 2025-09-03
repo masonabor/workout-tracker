@@ -132,8 +132,10 @@ def add_sets(equipment_id: int) -> str:
 @workouts_bp.route('/filter')
 @login_required
 def filter_workouts() -> str:
+    """Дана функція хороша, можна залишити, але треба дописати!"""
     user_id = session['id']
     name = request.args.get('name') # query параметри, передаються ось так: /filter?name=Push&date=2025-08-30, якщо такого параметру немає, то повертає None
+    name = name.strip() if name else None
     date_str = request.args.get('date') # request.args зберігає query параметри, які ми передаємо через браузерну строку
 
     query = Workout.query.filter_by(user_id=user_id)
@@ -143,7 +145,7 @@ def filter_workouts() -> str:
 
     if date_str:
         try:
-            date = datetime.strptime(date_str, '%Y-%m-%d')
+            date = datetime.strptime(date_str, '%Y-%m-%d').date()
             query = query.filter(db.func.date(Workout.date) == date)
         except ValueError as e:
             print(e)

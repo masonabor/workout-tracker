@@ -105,23 +105,27 @@ def add_equipment(exercise_id: int) -> str:
         return render_template('error.html', error=e)
 
 
-@workouts_bp.route('/addSets/<equipment_id>', methods=['POST'])
+@workouts_bp.route('/addSets/<int:equipment_id>', methods=['POST'])
 @login_required
 def add_sets(equipment_id: int) -> str:
     equipment = Equipment.query.get(equipment_id)
     user = equipment.exercise.workout.user
+
     if user.id != session['id']:
         return render_template('error.html', error='Ви не є власником тренування')
 
     count = int(request.form['count'])
-    print(request.form['rest_time'])
-
+    weight = float(request.form['weight'])
     rest_time = datetime.strptime(request.form['rest_time'], '%H:%M:%S')
+
     if not count:
-        return render_template('error.html', error='')
+        return render_template('error.html', error='Потрібно ввести кількість повторів')
+
+    if not weight:
+        return render_template('error.html', error='Потрібно ввести вагу під час підходу')
 
     try:
-        db.session.add(Set(count, rest_time, equipment))
+        db.session.add(Set(count, weight, rest_time, equipment))
         db.session.commit()
         return render_template('workout_details.html', workout=equipment.exercise.workout)
     except Exception as e:

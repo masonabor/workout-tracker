@@ -31,13 +31,15 @@
                                     <input type="text" id="count" name="count" required>
                                 <label for="rest_time">Час відпочинку</label>
                                     <input type="time" id="rest_time" name="rest_time" step="1">
+                                <label for="weight">Час відпочинку</label>
+                                    <input type="number" id="weight" name="weight" required>
                                 <button type="submit">Додати</button>
                             </form>
                             {% if equipment.sets %}
                                 <ul class="sets-list">
                                     {% for s in equipment.sets %}
                                         <li>
-                                            Підхід {{ loop.index }}: {{ s.count }} повторів, відпочинок {{ s.rest_time.strftime('%H:%M:%S') }}
+                                            Підхід {{ loop.index }}: {{ s.count }} повторів, вага {{s.weight}}, відпочинок {{ s.rest_time.strftime('%H:%M:%S') }}
                                         </li>
                                     {% endfor %}
                                 </ul>

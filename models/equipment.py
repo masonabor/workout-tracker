@@ -23,3 +23,7 @@ class Equipment(Base):
             self.exercise = exercise
         else:
             raise ValueError('Machine має бути пов\'язаним з exercise')
+
+
+    def get_user(self) -> 'User':
+        return self.exercise.get_user()

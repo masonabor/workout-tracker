@@ -24,3 +24,5 @@ class Exercise(Base):
             raise ValueError('Exercise має бути прив\'язаним до workout')
 
 
+    def get_user(self) -> 'User':
+        return self.workout.get_user()

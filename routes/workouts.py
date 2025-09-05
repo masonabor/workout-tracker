@@ -2,25 +2,17 @@ from flask import Blueprint, request, render_template, session, url_for, redirec
 from models import User, Workout, Exercise, Set
 from database import db
 from datetime import datetime
-from decorators import login_required
+from decorators import login_required, owner_required
 
 from models.equipment import Equipment
 
 workouts_bp = Blueprint('workouts', __name__, url_prefix='/workouts')
 
 
-@workouts_bp.route('/view/<workout_id>')
+@workouts_bp.route('/view/<int:workout_id>')
 @login_required
-def workouts_view(workout_id: int) -> str:
-    try:
-        workout = Workout.query.get(workout_id)
-
-        if workout.user_id != session['id']:
-            return render_template('error.html', error='Ви не є власником цього тренування')
-
-    except Exception as e:
-        print(e)
-        return render_template('error.html', error=e)
+@owner_required(Workout, param='workout_id')
+def workouts_view(workout) -> str:
     return render_template('workout_details.html', workout=workout)
 
 
@@ -51,20 +43,16 @@ def create_workout() -> str:
         return render_template('error.html', error=e)
 
 
-@workouts_bp.route('/addExercise/<workout_id>', methods=['POST', 'GET'])
+@workouts_bp.route('/addExercise/<int:workout_id>', methods=['POST', 'GET'])
 @login_required
-def add_exercise(workout_id: int) -> str | Response:
+@owner_required(Workout, param='workout_id')
+def add_exercise(workout) -> str | Response:
     if request.method == 'GET':
-        return render_template('add_exercise.html', workout_id=workout_id)
+        return render_template('add_exercise.html', workout_id=workout.id)
 
     user = User.query.filter_by(username=session['user']).first()
     if not user:
         return render_template('error.html', error='Ви не ввійшли')
-
-    workout = Workout.query.get(workout_id)
-
-    if not workout:
-        return render_template('error.html', error='Тренування з таким id у даного користувача не знайдено')
 
     name = request.form['name']
     equipment = request.form['equipment']
@@ -78,27 +66,23 @@ def add_exercise(workout_id: int) -> str | Response:
         if equipment:
             db.session.add(Equipment(equipment, exercise))
         db.session.commit()
-        return redirect(url_for('workouts.workouts_view', workout_id=workout_id))
+        return redirect(url_for('workouts.workouts_view', workout_id=workout.id))
     except Exception as e:
         print(e)
         return render_template('error.html', error=e)
 
 
-@workouts_bp.route('/addEquipment/<exercise_id>', methods=['POST'])
+@workouts_bp.route('/addEquipment/<int:exercise_id>', methods=['POST'])
 @login_required
-def add_equipment(exercise_id: int) -> str:
-    user = Exercise.query.filter_by(id=exercise_id).first().workout.user
-    if user.id != session['id']:
-        return render_template('error.html', error='Ви не є власником вправи')
-
+@owner_required(Exercise, param='exercise_id')
+def add_equipment(exercise) -> str:
     name = request.form['name']
     if not name:
         return render_template('error.html', error='Введіть назву устаткування')
 
     try:
-        db.session.add(Equipment(name, exercise_id=exercise_id))
+        db.session.add(Equipment(name, exercise=exercise))
         db.session.commit()
-        exercise = Exercise.query.get(exercise_id)
         return render_template('workout_details.html', workout=exercise.workout)
     except Exception as e:
         print(e)
@@ -107,12 +91,8 @@ def add_equipment(exercise_id: int) -> str:
 
 @workouts_bp.route('/addSets/<int:equipment_id>', methods=['POST'])
 @login_required
-def add_sets(equipment_id: int) -> str:
-    equipment = Equipment.query.get(equipment_id)
-    user = equipment.exercise.workout.user
-
-    if user.id != session['id']:
-        return render_template('error.html', error='Ви не є власником тренування')
+@owner_required(Equipment, param='equipment_id')
+def add_sets(equipment) -> str:
 
     count = int(request.form['count'])
     weight = float(request.form['weight'])
@@ -136,7 +116,10 @@ def add_sets(equipment_id: int) -> str:
 @workouts_bp.route('/filter')
 @login_required
 def filter_workouts() -> str:
-    """Дана функція хороша, можна залишити, але треба дописати!"""
+    """
+    Тут треба зрозуміти, що можна отримати query і далі його за потреби фільтрувати, а не писати все в один рядок
+    також потрібно використовувати query параметри, так як це зручно, наприклад для фільтрування
+    """
     user_id = session['id']
     name = request.args.get('name') # query параметри, передаються ось так: /filter?name=Push&date=2025-08-30, якщо такого параметру немає, то повертає None
     name = name.strip() if name else None
@@ -157,8 +140,4 @@ def filter_workouts() -> str:
 
     workouts = query.order_by(Workout.date.desc()).all()
     return render_template('homepage.html', workouts=workouts)
-"""
-Тут треба зрозуміти, що можна отримати query і далі його за потреби фільтрувати, а не писати все в один рядок
-також потрібно використовувати query параметри, так як це зручно, наприклад для фільтрування
-"""
 

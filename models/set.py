@@ -28,3 +28,7 @@ class Set(Base):
             self.equipment = equipment
         else:
             raise ValueError('Set має бути пов\'язаним з machine')
+
+
+    def get_user(self) -> 'User':
+        return self.equipment.get_user()

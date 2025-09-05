@@ -1,0 +1,34 @@
+from .base import Base
+from app.extensions import db
+from datetime import datetime
+from .equipment import Equipment
+
+class Set(Base):
+    __tablename__ = 'sets'
+
+    machine_id = db.Column(db.Integer, db.ForeignKey('equipments.id'), nullable=False)
+    equipment = db.relationship('Equipment', back_populates='sets', lazy='selectin')
+    count = db.Column(db.Integer)
+    weight = db.Column(db.Float, nullable=False)
+    rest_time = db.Column(db.DateTime)
+
+    def __init__(self,
+                 count: int,
+                 weight: float,
+                 rest_time: datetime,
+                 equipment: Equipment = None,
+                 equipment_id: int = None) -> None:
+
+        self.count = count
+        self.weight = weight
+        self.rest_time = rest_time
+        if equipment_id:
+            self.machine_id = equipment_id
+        elif equipment:
+            self.equipment = equipment
+        else:
+            raise ValueError('Set має бути пов\'язаним з machine')
+
+
+    def get_user(self) -> 'User':
+        return self.equipment.get_user()

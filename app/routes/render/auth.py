@@ -20,8 +20,7 @@ def login() -> Response:
     else:
         flash('Користувача не знайдено', 'danger')
         return redirect(url_for('auth.login'))
-    flash(existiong_user.workouts)
-    return redirect(url_for('account.homepage'))
+    return redirect(url_for('account_view.homepage'))
 
 
 @auth_bp.route('/logout')

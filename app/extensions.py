@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy() # створюємо об'єкт SQLAlchemy без підключення до застосунку
 
+
 """
 тут lazy initialization - відкладена ініціалізація 
 у цьому випадку відклав ініціалізацію підключення до конкретного застосунку, що

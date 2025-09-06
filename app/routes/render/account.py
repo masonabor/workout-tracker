@@ -7,17 +7,6 @@ from app.exceptions import WeekPasswordException
 account_bp = Blueprint('account', __name__, url_prefix='/account')
 
 
-@account_bp.route('/homepage')
-@login_required
-def homepage() -> Response | None:
-    try:
-        user = User.query.filter_by(username=session['user']).first()
-        return redirect(url_for('account.homepage', workouts=user.workouts))
-    except Exception as e:
-        print(e)
-        abort(404)
-
-
 @account_bp.route('/register', methods=['POST'])
 def register() -> Response | None:
     username = request.form['username']

@@ -14,8 +14,8 @@
         <ul class="nav-links">
             <li><a href="{{ url_for('home.home') }}">Головна</a></li>
             {% if 'user' in session %}
-                <li><a href="{{ url_for('account.homepage') }}">Мої тренування</a></li>
-<!--                <li><a href="{{ url_for('account.homepage') }}">Профіль</a></li>-->
+                <li><a href="{{ url_for('account_view.homepage') }}">Мої тренування</a></li>
+                <li><a href="">Профіль</a></li>
                 <li><a href="{{ url_for('auth.logout') }}">Вийти</a></li>
             {% else %}
                 <li><a href="{{ url_for('auth.login') }}">Увійти</a></li>

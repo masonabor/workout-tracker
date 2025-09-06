@@ -8,9 +8,13 @@
 <div class="form-container">
     <h2>Реєстрація користувача</h2>
 
-    {% if error %}
-        <div class="error-message">{{ error }}</div>
-    {% endif %}
+    {% with errors = get_flashed_messages(with_categories=true) %}
+        {% for category, error in errors %}
+            {% if category == 'error' %}
+                <div class="error-message">{{ error }}</div>
+            {% endif %}
+        {% endfor %}
+    {% endwith %}
 
     <form method="POST" action="{{ url_for('account.register') }}">
         <label for="username">Логін</label>

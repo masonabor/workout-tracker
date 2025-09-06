@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, session, redirect, url_for, Response
+from flask import Blueprint, request, session, redirect, url_for, Response, flash, abort
 from app.models import User
 from app.extensions import db
 from app.decorators import login_required
@@ -14,12 +14,14 @@ def register() -> Response | None:
     password = request.form['password']
 
     if not username or not email or not password:
-        return redirect(url_for('account.register', error='Заповніть персональні дані'))
+        flash('Заповніть персональні дані', 'error')
+        return redirect(url_for('account.register'))
 
     existing_user = User.query.filter((User.username == username) | (User.email == email)).first()
 
     if existing_user:
-        return redirect(url_for('account.register', error='Заповніть персональні дані'))
+        flash('Користувач зареєстрований', 'error')
+        return redirect(url_for('account.register'))
 
     try:
         check_password(password)

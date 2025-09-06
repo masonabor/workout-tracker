@@ -13,7 +13,7 @@ def login() -> Response:
 
     if existing_user:
         if not existing_user.check_password(password):
-            flash('Неправильний пароль', 'danger') # дозволяє зберегти одноразове повідомлення в сесії користувача, зберігається в session['_flashes'], існує до наступного http запиту (get_flashed_messages на вбюшці)
+            flash('Неправильний пароль', 'error') # дозволяє зберегти одноразове повідомлення в сесії користувача, зберігається в session['_flashes'], існує до наступного http запиту (get_flashed_messages на вбюшці)
             return redirect(url_for('auth.login'))
         session['user'] = existing_user.username
         session['id'] = existing_user.id

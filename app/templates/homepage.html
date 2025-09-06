@@ -11,22 +11,23 @@
     <a class="add-button" href="{{ url_for('workouts.create_workout') }}">
         ➕ Додати тренування
     </a>
-
-    {% if workouts %}
-        <ul class="workout-list">
-            {% for workout in workouts %}
-                <li class="workout-item">
-                    <div class="workout-info">
-                        <strong>{{ workout.name }}</strong>
-                        <span class="workout-date">{{ workout.date.strftime("%d.%m.%Y %H:%M") }}</span>
-                    </div>
-                    <a class="view-link" href="{{ url_for('workouts.workouts_view', workout_id=workout.id) }}">
-                        🔗 Відкрити
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
+    {% with workouts = get_flashed_messages()['message']
+        {% if workouts %}
+            <ul class="workout-list">
+                {% for workout in workouts %}
+                    <li class="workout-item">
+                        <div class="workout-info">
+                            <strong>{{ workout.name }}</strong>
+                            <span class="workout-date">{{ workout.date.strftime("%d.%m.%Y %H:%M") }}</span>
+                        </div>
+                        <a class="view-link" href="{{ url_for('workouts.workouts_view', workout_id=workout.id) }}">
+                            🔗 Відкрити
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+    {% endwith %}
         <p class="no-workouts">У вас ще немає тренувань.</p>
     {% endif %}
 </div>

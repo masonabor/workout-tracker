@@ -4,8 +4,8 @@ account_view_bp = Blueprint('account_view', __name__, url_prefix='/account')
 
 
 @account_view_bp.route('/homepage')
-def homepage(workouts: list) -> str:
-    return render_temlpate('homepage.html', workouts=workouts)
+def homepage() -> str:
+    return render_temlpate('homepage.html')
 
 
 @account_view_bp.route('/register')
